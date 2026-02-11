@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UnifiedAi - Talks To You</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Neural Network Canvas -->
+    <canvas id="neuralCanvas"></canvas>
+    <canvas id="waveCanvas"></canvas>
+
+    <div class="container">
+        <!-- Header with Brain Animation -->
+        <header>
+            <div class="brain-container">
+                <div class="brain-pulse"></div>
+                <div class="brain-pulse delay-1"></div>
+                <div class="brain-pulse delay-2"></div>
+                <span class="brain-icon">🧠</span>
+            </div>
+            <h1 class="neural-text" data-text="UnifiedAi">UnifiedAi</h1>
+            <p class="subtitle">
+                <span class="thinking-animation">
+                    <span class="word">It</span>
+                    <span class="word">Talks</span>
+                    <span class="word">To</span>
+                    <span class="word accent">You</span>
+                </span>
+            </p>
+            <p class="tagline">One voice • Reflection + Advisor + Main • Deep reasoning</p>
+        </header>
+
+        <!-- Navigation -->
+        <nav class="main-nav">
+            <button class="nav-btn active" data-tab="chat">
+                <span class="nav-icon">💬</span>
+                <span class="nav-label">Chat</span>
+                <div class="nav-glow"></div>
+            </button>
+            <button class="nav-btn" data-tab="deep">
+                <span class="nav-icon">🔮</span>
+                <span class="nav-label">Deep Think</span>
+                <div class="nav-glow"></div>
+            </button>
+            <button class="nav-btn" data-tab="daemon">
+                <span class="nav-icon">👁️</span>
+                <span class="nav-label">Background Mind</span>
+                <div class="nav-glow"></div>
+            </button>
+            <button class="nav-btn" data-tab="insights">
+                <span class="nav-icon">🌐</span>
+                <span class="nav-label">Insights</span>
+                <div class="nav-glow"></div>
+            </button>
+            <button class="nav-btn" data-tab="settings">
+                <span class="nav-icon">⚙️</span>
+                <span class="nav-label">Settings</span>
+                <div class="nav-glow"></div>
+            </button>
+            <button class="nav-btn" id="idleBtn" onclick="showIdleScreen()">
+                <span class="nav-icon">🔒</span>
+                <span class="nav-label">Lock Screen</span>
+                <div class="nav-glow"></div>
+            </button>
+        </nav>
+
+        <!-- Main Content -->
+        <main>
+            <!-- Chat Tab -->
+            <div id="chatTab" class="tab-content active">
+                <div class="chat-container">
+                    <div id="chatMessages" class="chat-messages">
+                        <div class="message assistant">
+                            <div class="message-avatar">
+                                <span>🧠</span>
+                                <div class="avatar-ring"></div>
+                            </div>
+                            <div class="message-content">
+                                <p>I'm <strong>UnifiedAi</strong>. I'm talking <em>to you</em> — not just answering. Behind this one reply, I reflect on our conversation and advise myself so what I say is coherent and tuned to you.</p>
+                                <p>Say anything. With <span class="highlight">"UnifiedAi talks to you"</span> on (default), I use that pipeline. Turn on <span class="highlight">"Deep Think"</span> when you want the full reasoning loop for a hard question.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="chat-input-container">
+                        <div class="think-toggle">
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="talkToMeToggle" checked>
+                                <span class="toggle-slider"></span>
+                            </label>
+                            <span class="toggle-label">💬 UnifiedAi talks to you</span>
+                        </div>
+                        <div class="think-toggle">
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="deepThinkToggle">
+                                <span class="toggle-slider"></span>
+                            </label>
+                            <span class="toggle-label">🔮 Deep Think Mode</span>
+                        </div>
+                        <div class="think-toggle">
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="coordinatorToggle" checked>
+                                <span class="toggle-slider"></span>
+                            </label>
+                            <span class="toggle-label">🎯 Director Mode (guided multi-agent)</span>
+                        </div>
+                        <div class="think-toggle">
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="arenaToggle">
+                                <span class="toggle-slider"></span>
+                            </label>
+                            <span class="toggle-label">⚡ Arena Mode (agents debate your question)</span>
+                        </div>
+                        <div class="chat-input">
+                            <div class="input-glow"></div>
+                            <input type="text" id="chatInput" placeholder="Talk to UnifiedAi..." autofocus>
+                            <button id="sendBtn">
+                                <span>Think</span>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M5 12h14M12 5l7 7-7 7"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Deep Think Tab -->
+            <div id="deepTab" class="tab-content">
+                <div class="deep-think-container">
+                    <div class="section-header">
+                        <span class="section-icon">🔮</span>
+                        <h2>Deep Problem Solving</h2>
+                    </div>
+                    <p class="info">Submit a hard question. I'll break it down, generate multiple approaches, critique each one, synthesize the best answer, and reflect until I'm confident.</p>
+                    
+                    <div class="controls-grid">
+                        <div class="control-group">
+                            <label>Thinking Mode:</label>
+                            <select id="thinkMode">
+                                <option value="deep">Deep (Thorough)</option>
+                                <option value="maximum">Maximum (All-out effort)</option>
+                                <option value="quick">Quick (Fast but thoughtful)</option>
+                            </select>
+                        </div>
+                        
+                        <div class="control-group">
+                            <label>Model:</label>
+                            <select id="thinkModel">
+                                <option value="">Loading models...</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="memory-toggle">
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="useMemoryToggle" checked>
+                            <span class="toggle-slider"></span>
+                        </label>
+                        <span class="toggle-label">🧠 Use Memory (Learn from past sessions)</span>
+                    </div>
+                    
+                    <div class="problem-input">
+                        <textarea id="problemInput" rows="4" placeholder="Enter a hard question or complex problem..."></textarea>
+                        <button id="thinkBtn" class="think-button">
+                            <span class="btn-icon">🧠</span>
+                            <span>Think Deep</span>
+                            <div class="btn-particles"></div>
+                        </button>
+                    </div>
+                    
+                    <div id="thinkingProcess" class="thinking-process hidden">
+                        <h3><span class="pulse-icon">💭</span> Thinking Process</h3>
+                        <div id="thoughtsContainer" class="thoughts-container"></div>
+                    </div>
+                    
+                    <div id="finalAnswer" class="final-answer hidden">
+                        <h3><span class="sparkle-icon">✨</span> Final Answer</h3>
+                        <div id="answerContent" class="answer-content"></div>
+                        <div class="answer-meta">
+                            <div class="meta-item">
+                                <span class="meta-label">Confidence</span>
+                                <span class="meta-value" id="answerConfidence">0%</span>
+                            </div>
+                            <div class="meta-item">
+                                <span class="meta-label">Iterations</span>
+                                <span class="meta-value" id="answerIterations">0</span>
+                            </div>
+                            <div class="meta-item">
+                                <span class="meta-label">Time</span>
+                                <span class="meta-value" id="answerTime">0s</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Background Mind Tab -->
+            <div id="daemonTab" class="tab-content">
+                <div class="daemon-container">
+                    <div class="section-header">
+                        <span class="section-icon eye-icon">👁️</span>
+                        <h2>Background Mind</h2>
+                    </div>
+                    <p class="info">The daemon runs continuously in the background, making connections and generating insights. It's always thinking, even when you're not asking questions.</p>
+                    
+                    <div class="daemon-controls">
+                        <button id="startDaemon" class="daemon-btn start">
+                            <span>▶️</span> Start Background Thinking
+                        </button>
+                        <button id="stopDaemon" class="daemon-btn stop">
+                            <span>⏹️</span> Stop
+                        </button>
+                        <div id="daemonStatus" class="daemon-status">
+                            <span class="status-dot"></span>
+                            <span class="status-text">Inactive</span>
+                        </div>
+                    </div>
+                    
+                    <div class="insights-container">
+                        <h3><span class="bulb-icon">💡</span> Recent Insights</h3>
+                        <div class="insight-controls">
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="streamInsightsToggle">
+                                <span class="toggle-slider"></span>
+                            </label>
+                            <span class="toggle-label">📡 Real-time Streaming</span>
+                        </div>
+                        <div id="insightsList" class="insights-list">
+                            <p class="no-insights">No insights yet. Start the background mind to begin generating.</p>
+                        </div>
+                        <div class="insight-actions">
+                            <button id="refreshInsights" class="refresh-btn">🔄 Refresh</button>
+                            <button id="exportInsightsJson" class="export-btn">📥 Export JSON</button>
+                            <button id="exportInsightsTxt" class="export-btn">📄 Export TXT</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Insights Dashboard Tab -->
+            <div id="insightsTab" class="tab-content">
+                <div class="insights-dashboard">
+                    <div class="section-header">
+                        <span class="section-icon">🌐</span>
+                        <h2>Insights Dashboard</h2>
+                    </div>
+                    <p class="info">Explore the knowledge graph of insights, connections, and breakthrough ideas generated by the background mind.</p>
+                    
+                    <div class="dashboard-controls">
+                        <div class="filter-group">
+                            <label>Domain:</label>
+                            <select id="domainFilter">
+                                <option value="">All Domains</option>
+                                <option value="biology">Biology</option>
+                                <option value="physics">Physics</option>
+                                <option value="ai">AI</option>
+                                <option value="philosophy">Philosophy</option>
+                                <option value="technology">Technology</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label>Min Novelty:</label>
+                            <input type="range" id="noveltyFilter" min="0" max="100" value="0">
+                            <span id="noveltyValue">0%</span>
+                        </div>
+                        <div class="filter-group">
+                            <label>Min Testability:</label>
+                            <input type="range" id="testabilityFilter" min="0" max="100" value="0">
+                            <span id="testabilityValue">0%</span>
+                        </div>
+                        <button id="applyFilters" class="filter-btn">Apply Filters</button>
+                        <button id="refreshGraph" class="refresh-btn">🔄 Refresh Graph</button>
+                    </div>
+                    
+                    <div class="dashboard-stats" id="dashboardStats">
+                        <div class="stat-card">
+                            <div class="stat-value" id="totalInsights">0</div>
+                            <div class="stat-label">Total Insights</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="totalConnections">0</div>
+                            <div class="stat-label">Connections</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="totalDomains">0</div>
+                            <div class="stat-label">Domains</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="avgNovelty">0%</div>
+                            <div class="stat-label">Avg Novelty</div>
+                        </div>
+                    </div>
+                    
+                    <div class="dashboard-view-toggle">
+                        <button class="view-btn active" data-view="graph">🌐 Knowledge Graph</button>
+                        <button class="view-btn" data-view="list">📋 Insight List</button>
+                    </div>
+                    
+                    <div id="knowledgeGraphView" class="graph-view active">
+                        <div id="graphContainer" class="graph-container">
+                            <canvas id="graphCanvas"></canvas>
+                            <div id="graphControls" class="graph-controls">
+                                <button id="zoomIn">+</button>
+                                <button id="zoomOut">-</button>
+                                <button id="resetView">Reset</button>
+                                <button id="autoLayout">Auto Layout</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div id="insightListView" class="insight-list-view">
+                        <div id="insightListContainer" class="insight-list-container">
+                            <p class="loading">Loading insights...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Settings Tab -->
+            <div id="settingsTab" class="tab-content">
+                <div class="settings-container">
+                    <div class="section-header">
+                        <span class="section-icon">⚙️</span>
+                        <h2>Settings</h2>
+                    </div>
+                    
+                    <div class="settings-section">
+                        <h3>🧠 Model Selection</h3>
+                        <div class="model-selector-full">
+                            <label>Current Model:</label>
+                            <select id="settingsModel">
+                                <option value="">Loading...</option>
+                            </select>
+                            <button id="refreshModels" class="refresh-btn">🔄 Refresh</button>
+                        </div>
+                        <p class="info">Switch between different AI models. Each has different strengths!</p>
+                    </div>
+                    
+                    <div class="settings-section">
+                        <h3>💾 Memory System</h3>
+                        <div id="memoryStats" class="memory-stats">
+                            <div class="stat-card loading">
+                                <p>Loading memory statistics...</p>
+                            </div>
+                        </div>
+                        <button id="refreshMemoryStats" class="refresh-btn">🔄 Refresh Stats</button>
+                    </div>
+                    
+                    <div class="settings-section">
+                        <h3>🔍 Learned Patterns</h3>
+                        <div id="learnedPatterns" class="patterns-list">
+                            <p>Loading patterns...</p>
+                        </div>
+                        <button id="refreshPatterns" class="refresh-btn">🔄 Refresh Patterns</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Status Bar -->
+        <div id="statusBar" class="status-bar">
+            <div class="status-pulse"></div>
+            <span id="statusText">Brain Thinker Ready</span>
+        </div>
+    </div>
+
+    <!-- Arena Live Side Panel -->
+    <div id="arenaPanel" class="arena-panel">
+        <div class="arena-panel-header">
+            <div class="arena-panel-glow"></div>
+            <span class="arena-panel-icon">⚡</span>
+            <span class="arena-panel-title">ARENA — Live Debate</span>
+            <div class="arena-panel-status" id="arenaPanelStatus">Initializing...</div>
+        </div>
+        <div class="arena-panel-body" id="arenaPanelBody">
+            <!-- Messages appear here in real time -->
+        </div>
+        <div class="arena-panel-insights" id="arenaPanelInsights">
+        </div>
+    </div>
+    <div id="arenaPanelOverlay" class="arena-panel-overlay"></div>
+
+    <script src="effects.js"></script>
+    <script src="insights.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

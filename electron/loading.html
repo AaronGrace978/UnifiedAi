@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UnifiedAi - Loading</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: linear-gradient(135deg, #0a0a0f 0%, #1a1a2e 50%, #16213e 100%);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: #e0e0e0;
+      overflow: hidden;
+    }
+    
+    .container {
+      text-align: center;
+      animation: fadeIn 0.8s ease-out;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .logo {
+      font-size: 4rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 0.5rem;
+      letter-spacing: -2px;
+    }
+    
+    .tagline {
+      font-size: 1.1rem;
+      color: #888;
+      margin-bottom: 3rem;
+      font-weight: 300;
+    }
+    
+    .loader {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 2rem;
+    }
+    
+    .loader-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      animation: pulse 1.4s ease-in-out infinite;
+    }
+    
+    .loader-dot:nth-child(2) { animation-delay: 0.2s; }
+    .loader-dot:nth-child(3) { animation-delay: 0.4s; }
+    .loader-dot:nth-child(4) { animation-delay: 0.6s; }
+    
+    @keyframes pulse {
+      0%, 100% { transform: scale(0.8); opacity: 0.5; }
+      50% { transform: scale(1.2); opacity: 1; }
+    }
+    
+    .status {
+      font-size: 0.95rem;
+      color: #667eea;
+      animation: blink 2s ease-in-out infinite;
+    }
+    
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+    
+    .features {
+      position: absolute;
+      bottom: 2rem;
+      display: flex;
+      gap: 2rem;
+      font-size: 0.75rem;
+      color: #555;
+    }
+    
+    .feature {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    .feature::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #667eea;
+    }
+    
+    /* Animated background */
+    .bg-orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      opacity: 0.3;
+      animation: float 8s ease-in-out infinite;
+    }
+    
+    .orb-1 {
+      width: 400px;
+      height: 400px;
+      background: #667eea;
+      top: -100px;
+      left: -100px;
+    }
+    
+    .orb-2 {
+      width: 300px;
+      height: 300px;
+      background: #764ba2;
+      bottom: -50px;
+      right: -50px;
+      animation-delay: -4s;
+    }
+    
+    @keyframes float {
+      0%, 100% { transform: translate(0, 0); }
+      50% { transform: translate(30px, 30px); }
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-orb orb-1"></div>
+  <div class="bg-orb orb-2"></div>
+  
+  <div class="container">
+    <div class="logo">UnifiedAi</div>
+    <div class="tagline">The Ultimate Meta-Intelligence Platform</div>
+    
+    <div class="loader">
+      <div class="loader-dot"></div>
+      <div class="loader-dot"></div>
+      <div class="loader-dot"></div>
+      <div class="loader-dot"></div>
+    </div>
+    
+    <div class="status">Initializing neural pathways...</div>
+  </div>
+  
+  <div class="features">
+    <div class="feature">Meta-Intelligence</div>
+    <div class="feature">ActivatePrime</div>
+    <div class="feature">Knowledge Graph</div>
+    <div class="feature">Physics Engine</div>
+  </div>
+  
+  <script>
+    const statuses = [
+      'Initializing neural pathways...',
+      'Loading knowledge graph...',
+      'Activating emotional intelligence...',
+      'Connecting to Ollama...',
+      'Preparing meta-intelligence...',
+      'Almost ready...'
+    ];
+    
+    let idx = 0;
+    setInterval(() => {
+      idx = (idx + 1) % statuses.length;
+      document.querySelector('.status').textContent = statuses[idx];
+    }, 2000);
+  </script>
+</body>
+</html>
+
