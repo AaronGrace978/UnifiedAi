@@ -2,6 +2,9 @@
 
 **The project that unifies EVERYTHING.**
 
+<img width="2752" height="1536" alt="image" src="https://github.com/user-attachments/assets/b52d5e51-42e8-4840-aaf6-82623c9d4ab8" />
+
+
 ---
 
 ## 🔥 WHAT IS UNIFIEDAI?
