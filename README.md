@@ -150,3 +150,7 @@ UnifiedAi/
 **Goal:** The ultimate meta-intelligence platform
 
 **LET'S BUILD! 🔥**
+
+<img width="2752" height="1536" alt="2" src="https://github.com/user-attachments/assets/27c8c880-1ac7-4c6d-82b8-e31908523261" />
+
+
